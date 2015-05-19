@@ -1,0 +1,35 @@
+{
+  "name": "pipplware",
+  "version": "0.0.1",
+  "description": "An example module to illustrate the usage of a package.json",
+  "author": "Filipe Teixeira <teixeiras@gmail.com>",
+  "contributors": [{
+    "name": "Filipe Teixeira",
+    "email": "teixeiras@gmail.com"
+  }],
+  "bin": {
+    "module-name": "./bin/pipplware"
+  },
+  "scripts": {
+    "start": "forever start main.js",
+    "predeploy": "echo im about to deploy",
+    "postdeploy": "echo ive deployed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nodejitsu/browsenpm.org"
+  },
+  "keywords": [
+    "pipplware"
+  ],
+  "dependencies": {
+    "ws": "*",
+    "mdns": "*",
+    "forever": "*",
+    "node-syslog": "*",
+    "cpu": "*",
+    "struct": "*",
+    "ioctl": "*"
+  },
+  "license": "MIT"
+}

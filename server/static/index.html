@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+
+    <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>Pipplware</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <script src="client/jquery.min.js"></script>
+    <script src="client/Chart.min.js"></script>
+    <script src="client/communication.js"></script>
+    <script src="client/popup.js"></script>
+    <script src="js/main.js"></script>
+    <script src="client/angular.min.js"></script>
+    <script src="js/jquery.simplemodal.1.4.4.min.js"></script>
+    <script src="js/basic.js"></script>
+
+    <script>
+        socketHandler = new PipWebSocket(window.location.hostname, "%%port%%");
+
+    </script>
+</head>
+
+<body>
+
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<div class="container">
+    <!-- Top Header -->
+    <div class="header">
+        <img class="icon" src="images/logo_pipplware.png"/>
+    </div>
+
+    <div class="row" ng-app="menu">
+        <div class="row">
+            <div class="one-third column">
+                <h2>Menu</h2>
+                <ul>
+                    <li>
+                        Processor
+                    </li>
+                    <li>
+                        Memory
+                    </li>
+                    <li>
+                        Processes
+                    </li>
+                </ul>
+
+            </div>
+            <div class="two-thirds column">
+               <div id="content">
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End Document –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+<!-- Components -->
+
+<div id="processor" ng-controller="processor">
+    <p>
+        <canvas id="processorChart" width="400" height="400"></canvas>
+    </p>
+
+</div>
+
+<div id="memory" ng-controller="memory">
+    <p>
+        <canvas id="memoryChart" width="400" height="400"></canvas>
+    </p>
+
+</div>
+
+<div id="processes" ng-controller="processes">
+    <table>
+        <thead>
+            <th>Process list</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+
+</div>
+<!-- modal content -->
+<div id="basic-modal-content">
+    <h3>Password</h3>
+    <p>
+        <input type="password" required placeholder="Password">
+
+    </p>
+</div>
+
+<!-- preload the images -->
+<div style='display:none'>
+    <img src='img/basic/x.png' alt='' />
+</div>
+
+
+</body>
+</html>
