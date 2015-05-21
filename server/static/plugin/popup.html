@@ -1,0 +1,43 @@
+<!doctype html>
+<html >
+  <head>
+    <title>Pipplware</title>
+    <style>
+      body {
+        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+        font-size: 100%;
+      }
+      #status {
+        /* avoid an excessively wide status text */
+        white-space: pre;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 400px;
+      }
+    </style>
+
+      <script src="bower_components/jquery/dist/jquery.min.js"></script>
+      <script src="modules/configs.js"></script>
+
+      <script src="libs/Chart.min.js"></script>
+      <script src="modules/communication.js"></script>
+      <script src="bower_components/angular/angular.min.js"></script>
+      <script src="bower_components/angular-route/angular-route.min.js"></script>
+      <script src="bower_components/angular-websocket/angular-websocket.min.js"></script>
+      <script src="modules/processor.js"></script>
+      <script src="modules/memory.js"></script>
+      <script src="modules/processList.js"></script>
+
+      <script src="plugin.js"></script>
+      <script src="popup.js"></script>
+
+
+  </head>
+  <body ng-app="pipplware" >
+  <div>
+      <ng-view></ng-view>
+      <a href="#/login">login</a>
+  </div>
+  </body>
+</html>
+

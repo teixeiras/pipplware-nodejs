@@ -93,21 +93,20 @@ function processor_usage_update(socket) {
     var cpu=require('cpu');
 
     var num=cpu.num();
-    var interval = setInterval(function(){
-        cpu.usage(function(arr){
-            try {
-                socket.send(JSON.stringify({
-                    action: "sys_state",
-                    status: 1,
-                    content: {
-                        usage: arr
-                    }
-                }));
-            } catch (e) {
-                clearInterval(interval);
-            }
-        });
-    }, 5 * 1000);
+
+    cpu.usage(function(arr){
+        try {
+            socket.send(JSON.stringify({
+                action: "sys_state",
+                status: 1,
+                content: {
+                    usage: arr
+                }
+            }));
+        } catch (e) {
+        }
+    });
+
 }
 
 var wss = new WebSocketServer({ port: port });
