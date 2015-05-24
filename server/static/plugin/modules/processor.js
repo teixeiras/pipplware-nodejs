@@ -1,21 +1,29 @@
 angular.module('pipplware.processor.controllers', [])
     .controller('processorController', function ($scope, data) {
-    var processor;
-    data.sys_state = function() {
-        this.dataStream.send(JSON.stringify({ action: 'sys_state' }));
-    }
-    $scope.$on('sys_state', function(ev, object) {
-        if (object.content) {
-            if (typeof processor === "undefined") {
-                processor = new processorGraphic("myChart", object.content.usage.length);
-            }
-            processor.addData(object.content.usage);
+        var processor;
+        data.sys_state = function() {
+            this.dataStream.send(JSON.stringify({ action: 'sys_state' }));
         }
-    });
-    setInterval(function () {
+        $scope.$on('sys_state', function(ev, object) {
+            if (object.content) {
+                if (typeof processor === "undefined") {
+                    processor = new processorGraphic("myChart", object.content.usage.length);
+                }
+                processor.addData(object.content.usage);
+            }
+        });
 
         data.sys_state();
-    }, 1000);
+
+        var interval = setInterval(function () {
+
+            data.sys_state();
+
+        }, 1000);
+
+    $scope.$on("$destroy", function(){
+        clearInterval(interval );
+    });
 })
 
 processorGraphic = function (chartId, numberOfCPUS ) {

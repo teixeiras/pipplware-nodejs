@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+<div data-ng-controller="processListController">
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="process in processes">
+            <td data-title="'PID'" sortable="'pid'">{{process.pid}}</td>
+            <td data-title="'CPU'" sortable="'cpu'">{{process.cpu}}</td>
+            <td data-title="'MEM'" sortable="'mem'">{{process.mem}}</td>
+            <td data-title="'COMMAND'" sortable="'command'" filter="{ 'command': 'text' }">{{process.command}}</td>
+        </tr>
+    </table>
+</div>

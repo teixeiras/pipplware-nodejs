@@ -29,7 +29,8 @@
     "node-syslog": "*",
     "cpu": "*",
     "struct": "*",
-    "ioctl": "*"
+    "ioctl": "*",
+    "csv":"*"
   },
   "license": "MIT"
 }

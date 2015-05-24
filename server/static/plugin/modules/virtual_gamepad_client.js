@@ -113,18 +113,25 @@ var onGamePadConnected = function(success, content) {
     setDirection = function () {
     };
 
-    $(".btn").on("touchstart", function () {
-        btnId = $(this).data("btn");
+    function selectStartButton(btnId, code) {
         $("#" + btnId).attr("class", "btnSelected");
-        socket.emit("padEvent", {type: 0x01, code: $(this).data("code"), value: 1});
+        socket.emit("padEvent", {type: 0x01, code: code, value: 1});
         hapticCallback();
+    }
+
+    function selectEndButton(btnId, code) {
+        $("#" + btnId).attr("class", "");
+        socket.emit("padEvent", {type: 0x01, code: code, value: 0});
+        //hapticCallback();
+    }
+
+    $(".btn").on("touchstart", function () {
+        selectStartButton($(this).data("btn"), $(this).data("code"));
     });
 
     $(".btn").on("touchend", function () {
-        btnId = $(this).data("btn");
-        $("#" + btnId).attr("class", "");
-        socket.emit("padEvent", {type: 0x01, code: $(this).data("code"), value: 0});
-        //hapticCallback();
+        selectEndButton($(this).data("btn"), $(this).data("code"));
+
     });
 
     setDirection = function (direction) {
@@ -158,14 +165,68 @@ var onGamePadConnected = function(success, content) {
 
     setDirection({direction: "none"});
 }
-$( window ).load(function() {
+
+function handleKeyPress() {
+    /*
+     id="btnA" class="btn" data-btn="path3253" data-code="0x130"
+     id="btnX" class="btn" data-btn="path3259" data-code="0x133"
+     id="btnB" class="btn" data-btn="path3247" data-code="0x131"
+     id="btnY" class="btn" data-btn="path3237" data-code="0x134"
+     id="btnSELECT" class="btn" data-btn="rect3307" data-code="0x13a"
+     id="btnSTART" class="btn" data-btn="rect4170" data-code="0x13b"
+     id="btnRT" class="btn" data-btn="path4853" data-code="0x137"
+     id="btnLT" class="btn" data-btn="path4756" data-code="0x136"
+     */
+    $(document).keydown(function (e) {
+        switch (e.keyCode) {
+
+            case 87:
+                //UP
+                setDirection({direction: "up"});
+                break;
+            case 83:
+                //Down
+                setDirection({direction: "down"});
+                break;
+            case 65:
+                //Left
+                setDirection({direction: "left"});
+                break;
+            case 68:
+                //Right
+                setDirection({direction: "right"});
+                break;
+        }
+
+    });
+
+    $(document).keyup(function (e) {
+        switch (e.keyCode) {
+
+            case 87:
+            case 83:
+            case 65:
+            case 68:
+                lastDirection = "none";
+                setDirection({direction: lastDirection});
+
+                break;
+        }
+
+    });
+}
+function loadGamepadJSClient() {
     initJoystick();
     initSlotIndicator();
+    handleKeyPress();
 
     socket = new PipWebSocket(window.location.hostname, 9090, function (){
         socket.emit("connectGamepad", null);
     });
     socket.addHandler("connectGamepad",onGamePadConnected);
 
+}
+$( window ).load(function() {
 
+    loadGamepadJSClient();
 } );

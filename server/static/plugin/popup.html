@@ -1,43 +1,106 @@
 <!doctype html>
-<html >
-  <head>
+<html>
+<head>
+    <meta charset="utf-8">
     <title>Pipplware</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
     <style>
-      body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
-      }
-      #status {
-        /* avoid an excessively wide status text */
-        white-space: pre;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 400px;
-      }
+        body {
+            font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+            font-size: 100%;
+        }
+
+        #status {
+            /* avoid an excessively wide status text */
+            white-space: pre;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-width: 400px;
+        }
     </style>
 
-      <script src="bower_components/jquery/dist/jquery.min.js"></script>
-      <script src="modules/configs.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="modules/configs.js"></script>
 
-      <script src="libs/Chart.min.js"></script>
-      <script src="modules/communication.js"></script>
-      <script src="bower_components/angular/angular.min.js"></script>
-      <script src="bower_components/angular-route/angular-route.min.js"></script>
-      <script src="bower_components/angular-websocket/angular-websocket.min.js"></script>
-      <script src="modules/processor.js"></script>
-      <script src="modules/memory.js"></script>
-      <script src="modules/processList.js"></script>
+    <script src="libs/Chart.min.js"></script>
+    <script src="libs/circle-progress.js"></script>
 
-      <script src="plugin.js"></script>
-      <script src="popup.js"></script>
+    <script src="modules/communication.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+
+    <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-websocket/angular-websocket.min.js"></script>
+    <script src="modules/processor.js"></script>
+    <script src="modules/dashboard.js"></script>
+    <script src="modules/processList.js"></script>
+    <script src="modules/gamepad.js"></script>
+    <script src="modules/commands.js"></script>
+
+    <script src="plugin.js"></script>
+    <script src="popup.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/generic.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/ng-table/dist/ng-table.css">
 
 
-  </head>
-  <body ng-app="pipplware" >
-  <div>
-      <ng-view></ng-view>
-      <a href="#/login">login</a>
-  </div>
-  </body>
+</head>
+<body ng-app="pipplware">
+
+<div class="row" ng-app="menu">
+    <div class="row">
+        <div class="one-third column">
+            <h2>Menu</h2>
+            <ul>
+                <li>
+                    <a href="#/processor">
+                        Processor
+                    </a>
+                </li>
+                <li>
+                    <a href="#/processList">
+                        Process List
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#/commands">
+                        Commands
+                    </a>
+
+                </li>
+                <li>
+                    <span id="linkForGamepad"></span>
+                </li>
+            </ul>
+
+        </div>
+        <div class="two-thirds column">
+            <ng-view></ng-view>
+        </div>
+    </div>
+</div>
+</body>
 </html>
 

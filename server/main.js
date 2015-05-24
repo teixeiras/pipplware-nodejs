@@ -1,13 +1,19 @@
 /**
  * Created by teixeiras on 16/05/15.
  */
+var ChildProcess = require('child_process');
+
 var util = require('util');
+
+var os = require('os');
 
 var mdns = require('mdns');
 
 var webserver = require('./webserver.js');
 
 var fs = require("fs");
+
+var ShellScripts = require('./modules/shellScripts');
 
 var gamepad_hub = require('./gamepad/app/virtual_gamepad_hub');
 
@@ -45,7 +51,19 @@ parser = function (content, ws) {
             processor_usage_update(ws);
 
         }break;
+        case 'script': {
+            scripts(content["content"]["script"], ws);
+        }
 
+        case 'genericInformation': {
+            genericInformation(ws);
+        }
+        case 'memory':{
+            memory(ws);
+        }break;
+        case 'processList': {
+            processList(ws);
+        }break;
         case 'disconnect': {
 
                 if (ws.gamePadId !== void 0) {
@@ -88,6 +106,125 @@ parser = function (content, ws) {
     }
 }
 
+function scripts(script, socket) {
+    switch (script) {
+        case 'reboot': {
+            ShellScripts.reboot();
+
+        }break;
+        case 'both':{
+            ShellScripts.both();
+        }break;
+        case 'emulation':{
+            ShellScripts.emulation();
+        }break;
+        case 'kodi': {
+            ShellScripts.kodi();
+        }break;
+        case 'xfce':{
+            ShellScripts.xfce();
+        }break;
+        case 'terminal':{
+            ShellScripts.terminal();
+        }break;
+        case 'restartXbmc':{
+            ShellScripts.restartXbmc();
+        }break;
+    }
+}
+
+function genericInformation(socket) {
+    var vcgencmd = require('vcgencmd');
+
+    try {
+        socket.send(JSON.stringify({
+            action: "memory",
+            status: 1,
+            content: {
+                measureClock: {
+                    core: vcgencmd.measureClock('core'),
+                    sdram_c:vcgencmd.measureClock('sdram_c'),
+                    sdram_i:vcgencmd.measureClock('sdram_i'),
+                    sdram_p: vcgencmd.measureClock('sdram_p')
+                },
+                measureVolt: {
+                    core: vcgencmd.measureVolt('core'),
+                    sdram_c:vcgencmd.measureVolt('sdram_c'),
+                    sdram_i:vcgencmd.measureVolt('sdram_i'),
+                    sdram_p: vcgencmd.measureVolt('sdram_p')
+                },
+                measureTemp:vcgencmd.measureTemp(),
+                codecEnabled:{
+                    H264:vcgencmd.codecEnabled('H264'),
+                    MPG2:vcgencmd.codecEnabled('MPG2'),
+                    WVC1:vcgencmd.codecEnabled('WVC1'),
+                    MPG4:vcgencmd.codecEnabled('MPG4'),
+                    MJPG:vcgencmd.codecEnabled('MJPG'),
+                    WMV9:vcgencmd.codecEnabled('WMV9')
+                },
+                mem:{
+                    arm:vcgencmd.getMem('arm'),
+                    gpu:vcgencmd.getMem('gpu')
+                },
+                config:{
+                    int: vcgencmd.getConfig('int'),
+                    str: vcgencmd.getConfig('str')
+                }
+            }
+        }));
+    } catch (e) {
+    }
+}
+function memory(socket) {
+
+    try {
+        socket.send(JSON.stringify({
+            action: "memory",
+            status: 1,
+            content: {
+                freemem: os.freemem(),
+                usedmem: os.totalmem() - os.freemem(),
+                totalmem: os.totalmem()
+            }
+        }));
+    } catch (e) {
+    }
+
+}
+
+function processList(socket) {
+
+    ChildProcess.exec('ps -Ao pid,pcpu,size,command', function (err, stdout, stderr) {
+        if (err || stderr)
+            return callback(err || stderr.toString());
+
+        var results = [];
+        stdout.split('\n').map(function (row) {
+            var matches = row.match(/(\d+) (.*) (\d+) (.*)/);
+            if (!matches)
+                return;
+
+            results.push({
+                pid: parseInt(matches[1], 10),
+                cpu:parseFloat(matches[2].trim()),
+                mem: parseInt(matches[3], 10),
+                command: matches[4]
+            });
+
+        });
+        try {
+            socket.send(JSON.stringify({
+                action: "processList",
+                status: 1,
+                content: {
+                    processes: results
+                }
+            }));
+         } catch (e) {
+    }
+    });
+
+}
 
 function processor_usage_update(socket) {
     var cpu=require('cpu');

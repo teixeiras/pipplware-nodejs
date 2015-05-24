@@ -3,8 +3,13 @@
 angular.module('pipplware',
     ['ngWebSocket',
         'ngRoute',
+        'ngTable',
         'pipplware.processor.controllers',
-        'pipplware.memory.controllers'
+        'pipplware.dashboard.controllers',
+        'pipplware.processList.controllers',
+        'pipplware.gamepad.controllers',
+        'pipplware.commands.controllers'
+
     ])
 
     .factory('data', function($websocket, $rootScope) {
@@ -15,6 +20,7 @@ angular.module('pipplware',
         dataStream.onMessage(function(message) {
             var object = JSON.parse(message.data);
             if (object.action) {
+                console.log(object);
                 $rootScope.$broadcast(object.action, object);
             }
 
@@ -39,16 +45,33 @@ angular.module('pipplware',
             window.location = "#/dashboard"
         }
     })
-    .controller('dashboardController', function ($scope) {
-
-    })
 
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.
             when("/login", {templateUrl: "partials/login.html", controller: "loginController"}).
             when("/dashboard", {templateUrl: "partials/dashboard.html", controller: "dashboardController"}).
-            when("/memory", {templateUrl: "partials/memory.html", controller: "memoryController"}).
             when("/processList", {templateUrl: "partials/processList.html", controller: "processListController"}).
             when("/processor", {templateUrl: "partials/processor.html", controller: "processorController"}).
+            when("/gamepad", {templateUrl: "partials/gamepad.html", controller: "gamepadController"}).
+            when("/commands", {templateUrl: "partials/commands.html", controller: "commandsController"}).
+
             otherwise({redirectTo: '/login'});
     }]);
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var content;
+    if (chrome.extension) {
+        var optionsUrl = chrome.extension.getURL("gamepad.html");
+        content = '<a href="' + optionsUrl + '" target="_blank">Gamepad</a>';
+
+    } else {
+        content = '<a href="#/gamepad">Gamepad</a>';
+        content = '<a href="gamepad.html" target="_blank">Gamepad</a>';
+    }
+
+     $("#linkForGamepad").append($(content));
+
+});
