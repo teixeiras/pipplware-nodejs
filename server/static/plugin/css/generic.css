@@ -225,3 +225,6 @@ animate-glow {  0% {
     text-decoration: none;
 }
 
+.dashboard_key {
+    font-weight: bold;
+}

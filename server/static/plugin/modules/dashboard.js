@@ -29,7 +29,6 @@ angular.module('pipplware.dashboard.controllers', [])
 
             if (object.content) {
                 $scope.generic_information = object.content;
-                $defer.resolve($scope.generic_information);
 
             }
         });
