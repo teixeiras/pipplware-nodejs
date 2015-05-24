@@ -1,4 +1,6 @@
 <div data-ng-controller="processListController">
+    <h3>Processes</h3>
+
     <table ng-table="tableParams" class="table" show-filter="true">
         <tr ng-repeat="process in processes">
             <td data-title="'PID'" sortable="'pid'">{{process.pid}}</td>
