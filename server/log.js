@@ -1,13 +1,23 @@
 // log.js
 // ========
 
-var Syslog = require('node-syslog');
+var posix = require('posix');
+/**
+ * 'emerg'
+ 'alert'
+ 'crit'
+ 'err'
+ 'warning'
+ 'notice'
+ 'info'
+ 'debug'
+ */
+posix.openlog("node-syslog", {cons: true, pid:true}, 'user');
 
-Syslog.init("node-syslog", Syslog.LOG_PID | Syslog.LOG_ODELAY, Syslog.LOG_LOCAL0);
 
 module.exports = {
     info: function (text) {
-        //Syslog.log(Syslog.LOG_INFO, text);
+        //posix.log(Syslog.LOG_INFO, text);
         console.log(text);
     },
     error: function (text) {
@@ -15,7 +25,11 @@ module.exports = {
         console.log(text);
     },
     close: function () {
-        //Syslog.close();
+        posix.closelog();
     }
 
 };
+
+
+
+

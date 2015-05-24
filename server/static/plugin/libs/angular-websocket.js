@@ -361,7 +361,7 @@
       }
 
       // Browser
-      Socket = Socket || $window.WebSocket || $window.MozWebSocket;
+      Socket = Socket || $window.ReconnectingWebSocket || $window.MozWebSocket;
 
       if (protocols) {
         return new Socket(url, protocols);
