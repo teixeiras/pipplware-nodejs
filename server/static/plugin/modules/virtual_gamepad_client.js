@@ -110,6 +110,7 @@ var onGamePadConnected = function(success, content) {
     slotNumber = data.padId;
 
     $(".btn").off("touchstart touchend");
+
     setDirection = function () {
     };
 
@@ -126,12 +127,21 @@ var onGamePadConnected = function(success, content) {
     }
 
     $(".btn").on("touchstart", function () {
+
         selectStartButton($(this).data("btn"), $(this).data("code"));
     });
 
     $(".btn").on("touchend", function () {
         selectEndButton($(this).data("btn"), $(this).data("code"));
 
+    });
+
+    $(".btn").mouseup(function() {
+        selectEndButton($(this).data("btn"), $(this).data("code"));
+    });
+
+    $(".btn").mousedown(function() {
+        selectStartButton($(this).data("btn"), $(this).data("code"));
     });
 
     setDirection = function (direction) {
@@ -226,7 +236,8 @@ function loadGamepadJSClient() {
     socket.addHandler("connectGamepad",onGamePadConnected);
 
 }
-$( window ).load(function() {
+
+$( document ).ready(function() {
 
     loadGamepadJSClient();
-} );
+});
