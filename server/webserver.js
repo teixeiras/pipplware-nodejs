@@ -1,6 +1,5 @@
 var http = require("http"),
     url = require("url"),
-    path = require("path"),
     fs = require("fs")
 
 var log = require("./log.js");
@@ -17,7 +16,7 @@ module.exports = {
             var partialUrl = path.join(process.cwd(), "static/")
             var filename = path.join(partialUrl, uri);
 
-            path.exists(filename, function(exists) {
+            fs.exists(filename, function(exists) {
                 if(!exists) {
                     response.writeHead(404, {"Content-Type": "text/plain"});
                     response.write("404 Not Found\n");
