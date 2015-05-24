@@ -96,9 +96,8 @@ parser = function (content, ws) {
             }break;
         case 'padEvent': {
 
-                if (ws.gamePadId !== void 0 && data) {
-
-                    return hub.sendEvent(ws.gamePadId, data);
+                if (ws.gamePadId !== void 0 && content["content"]) {
+                    return hub.sendEvent(ws.gamePadId, content["content"]);
                 }
 
             }break;
@@ -292,42 +291,3 @@ process.on('exit', exitHandler.bind(null,{cleanup:true}));
 
 //catches ctrl+c event
 process.on('SIGINT', exitHandler.bind(null, {exit:true}));
-
-
-var vcgencmd = require('./vcgencmd.js');
-
-console.log(JSON.stringify({
-    action: "genericInformation",
-    status: 1,
-    content: {
-        measureClock: {
-            core: vcgencmd.measureClock('core'),
-            sdram_c:vcgencmd.measureClock('sdram_c'),
-            sdram_i:vcgencmd.measureClock('sdram_i'),
-            sdram_p: vcgencmd.measureClock('sdram_p')
-        },
-        measureVolt: {
-            core: vcgencmd.measureVolt('core'),
-            sdram_c:vcgencmd.measureVolt('sdram_c'),
-            sdram_i:vcgencmd.measureVolt('sdram_i'),
-            sdram_p: vcgencmd.measureVolt('sdram_p')
-        },
-        measureTemp:vcgencmd.measureTemp(),
-        codecEnabled:{
-            H264:vcgencmd.codecEnabled('H264'),
-            MPG2:vcgencmd.codecEnabled('MPG2'),
-            WVC1:vcgencmd.codecEnabled('WVC1'),
-            MPG4:vcgencmd.codecEnabled('MPG4'),
-            MJPG:vcgencmd.codecEnabled('MJPG'),
-            WMV9:vcgencmd.codecEnabled('WMV9')
-        },
-        mem:{
-            arm:vcgencmd.getMem('arm'),
-            gpu:vcgencmd.getMem('gpu')
-        },
-        config:{
-            int: vcgencmd.getConfig('int'),
-            str: vcgencmd.getConfig('str')
-        }
-    }
-}));
