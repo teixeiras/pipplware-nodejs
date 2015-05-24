@@ -1,6 +1,38 @@
 <div ng-controller="dashboardController">
-    Memória:
+    Memory:
     <div class="progress-bar blue stripes" id="memory">
         <span style="width: 0%"></span>
     </div>
+
+    Clock speed:
+    <div ng-repeat="(key, value) in generic_information.measureClock">
+        {{key}} = {{value}}
+    </div>
+
+    Voltage:
+    <div ng-repeat="(key, value) in generic_information.measureVolt">
+        {{key}} = {{value}}
+    </div>
+
+    Temperature:
+    {{generic_information.measureTemp}}
+
+    Codecs:
+    <div ng-repeat="(key, value) in generic_information.codecEnabled">
+        {{key}} = {{value}}
+    </div>
+
+    Memory:
+    <div ng-repeat="(key, value) in generic_information.mem">
+        {{key}} = {{value}}
+    </div>
+
+    Custom Settings:
+    <div ng-repeat="(key, value) in generic_information.config.int">
+        {{key}} = {{value}}
+    </div>
+    <div ng-repeat="(key, value) in generic_information.config.str">
+        {{key}} = {{value}}
+    </div>
+
 </div>

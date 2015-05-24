@@ -1,5 +1,5 @@
-function PipWebSocket(server, port, ready) {
-    this.ws = new WebSocket("ws://"+server+":"+port+"/echo");
+function PipWebSocket(server, ready) {
+    this.ws = new WebSocket(server);
     this.handlers = {};
 
     var self = this;

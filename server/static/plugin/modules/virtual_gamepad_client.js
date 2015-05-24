@@ -220,7 +220,7 @@ function loadGamepadJSClient() {
     initSlotIndicator();
     handleKeyPress();
 
-    socket = new PipWebSocket(window.location.hostname, 9090, function (){
+    socket = new PipWebSocket(config.getWebsocketAddress(), function (){
         socket.emit("connectGamepad", null);
     });
     socket.addHandler("connectGamepad",onGamePadConnected);
