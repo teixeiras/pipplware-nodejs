@@ -175,8 +175,18 @@ animate-glow {  0% {
 
 
 
+.section {
+    position: relative;
+    clear: both;
+    background-color: #eeeeee;
+    padding: 10px;
+    margin-bottom: 10px;
 
+
+}
 .sectionHeader {
+    font-weight: bold;
+    font-size: 24px;
 
 }
 .sectionContent {
@@ -184,8 +194,9 @@ animate-glow {  0% {
 }
 
 .sectionButton {
-    float: right;
+    margin: 10px;
     width: auto;
+    text-align: center;
     background: #1e71a8;
     background-image: -webkit-linear-gradient(top, #1e71a8, #2980b9);
     background-image: -moz-linear-gradient(top, #1e71a8, #2980b9);
