@@ -15,7 +15,7 @@ DEBIAN=${DIST}/DEBIAN
 
 VERSION=0.1
 
-sudo rm -rf $DIST
+rm -rf $DIST
 
 mkdir -p $DIST
 
@@ -51,13 +51,13 @@ cp -r ./* $SYSROOT/opt/pipplware-server
 cp -r $HOME/DEBIAN/*  $DEBIAN
 
 
-find ${DIST}/ -type d -exec sudo chmod 0755 {} \;
+find ${DIST}/ -type d -exec chmod 0755 {} \;
 
-find ${DIST}/ -type f -exec sudo chmod go-w {} \;
+find ${DIST}/ -type f -exec chmod go-w {} \;
 
-sudo chown -R root:root ${DIST}/
+chown -R root:root ${DIST}/
 
-let SIZE=`sudo du -s ${SYSROOT} | sed s'/\s\+.*//'`+8
+let SIZE=`du -s ${SYSROOT} | sed s'/\s\+.*//'`+8
 
 pushd ${SYSROOT}/
 
@@ -65,7 +65,7 @@ sudo tar czf ${DIST}/data.tar.gz [a-z]*
 
 popd
 
-sudo sed s"/SIZE/${SIZE}/" -i ${DEBIAN}/control
+sed s"/SIZE/${SIZE}/" -i ${DEBIAN}/control
 
 pushd ${DEBIAN}
 
@@ -77,16 +77,18 @@ pushd ${DIST}/
 
 echo 2.0 > ./debian-binary
 
-find ${DIST}/ -type d -exec sudo chmod 0755 {} \;
+find ${DIST}/ -type d -exec chmod 0755 {} \;
 
-find ${DIST}/ -type f -exec sudo chmod go-w {} \;
+find ${DIST}/ -type f -exec chmod go-w {} \;
 
-sudo chown -R root:root ${DIST}/
+chown -R root:root ${DIST}/
 
-sudo ar r $HOME/pipplware-server_$VERSION.deb debian-binary control.tar.gz data.tar.gz
+ar r $HOME/pipplware-server_$VERSION.deb debian-binary control.tar.gz data.tar.gz
 
 popd
+
 rm -rf  $HOME/deb_dist
+
 mkdir $HOME/deb_dist
 
 cp $HOME/node_latest_armhf.deb $HOME/deb_dist
