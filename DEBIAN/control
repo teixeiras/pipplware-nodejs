@@ -1,0 +1,7 @@
+Package: pipplware-server
+Architecture: all
+Maintainer: Filipe Teixeira
+Depends: node_latest_armhf
+Priority: optional
+Version: 0.1
+Description: The simpliest way to manage your rpi
