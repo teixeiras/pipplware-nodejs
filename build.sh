@@ -48,6 +48,8 @@ mkdir -p $SYSROOT/opt/pipplware-server
 
 cp -r ./* $SYSROOT/opt/pipplware-server
 
+cp -r ../scripts/pipplware-server $SYSROOT/etc/init.d/
+
 cp -r $HOME/DEBIAN/*  $DEBIAN
 
 

@@ -1,0 +1,2 @@
+chmod u+x /etc/init.d/pipplware-server
+update-rc.d -f pipplware-server defaults
