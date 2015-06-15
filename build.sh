@@ -25,6 +25,8 @@ mkdir -p $DEBIAN
 
 mkdir -p $SYSROOT/etc/udev/rules.d/
 
+mkdir -p $SYSROOT/etc/init.d/
+
 echo 'KERNEL=="uinput", MODE="0666"' >  $DIST/sysroot/etc/udev/rules.d/10-udev.rules
 
 sudo apt-get -y install libavahi-compat-libdnssd-dev
